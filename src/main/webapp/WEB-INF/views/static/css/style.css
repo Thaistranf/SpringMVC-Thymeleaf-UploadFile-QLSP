@@ -1,0 +1,14 @@
+h1 {
+    text-align: center;
+}
+
+/*tr {*/
+/*    height: 100%;*/
+/*}*/
+
+/*.a {*/
+/*    display: flex;*/
+/*    align-items: center;        !*Can giua theo chieu doc cua o, de dung dc phai di kem display: flex*!*/
+/*    justify-content: center;    !*Can giua theo chieu ngang cua o, de dung dc phai di kem display: flex*!*/
+/*    height: 100%;               !*Đặt chiều cao của ô là 100% để đảm bảo nội dung được căn giữa*!*/
+/*}*/
