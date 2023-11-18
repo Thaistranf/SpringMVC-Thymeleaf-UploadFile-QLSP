@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
-    <link rel="stylesheet" th:href="@{/static/css/style.css}">
+<!--    <link rel="stylesheet" th:href="@{/static/css/style.css}">-->
 </head>
 <body>
 <h1>Edit product</h1>
@@ -14,7 +14,7 @@
 </a>
 
 <form th:action="@{/products/update/{id}(id=${productEdit.getId()})}" th:object="${productEdit}"
-      method="POST" novalidate="novalidate" enctype="multipart/form-data">
+      method="post" novalidate="novalidate" enctype="multipart/form-data">
 <!--        <input type="hidden" th:field="*{id}"/>-->
     <table>
         <tr>

@@ -8,15 +8,52 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
 
+    <style>
+        h1 {
+            text-align: center;
+        }
+        .row {
+            margin-bottom: 10px;
+        }
+        th, td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .a {
+            display: flex;
+            align-content: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        img {
+            max-width: 200px;  /* Ảnh không vượt quá chiều rộng của ô */
+            max-height: 200px; /* Ảnh không vượt quá chiều cao của ô */
+            width: auto;      /* Tự động điều chỉnh chiều rộng */
+            height: auto;     /* Tự động điều chỉnh chiều cao */
+            display: block;   /* Loại bỏ khoảng trắng dư thừa dưới ảnh */
+        }
+    </style>
 
-
+    <link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
-<h1 style="text-align: center">Product Management</h1>
+<h1>Product Management</h1>
 
-<a th:href="@{/products/create}">
-    Add new product
-</a>
+<div class="row">
+    <div class="col-3" >
+        <a th:href="@{/products/create}" style="padding-left: 20px">
+            Add new product
+        </a>
+    </div>
+    <div class="col-6"></div>
+    <div class="col-3">
+        <form class="form-inline my-2 my-lg-0" action="/products/search" method="post">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="keyword" name="keyword">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </div>
+</div>
 
 <table class="table table-dark" id="productL">
     <thead>
@@ -31,18 +68,44 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="product : ${productL}">
+    <tr th:each="product:${productL}">
         <th scope="row" th:text="${product.id}"></th>
         <td th:text="${product.name}"></td>
         <td th:text="${product.price}"></td>
         <td th:text="${product.description}"></td>
         <td th:text="${product.brand}"></td>
-        <td><img height="20%" width="20%" th:src="@{'/static/image/' + ${product.image}}" alt="" src=""></td>
-        <td><a th:href="@{/products/update/{id}(id=${product.id})}">Edit</a></td>
+        <td class="a"><img th:src="@{'/static/image/' + ${product.image}}" alt="" src=""></td>
+        <td><a th:href="@{/products/update}">Edit</a></td>
         <td><a th:href="@{/products/delete/{id}(id=${product.id})}" onclick="return confirm('Xóa nhé???')">Delete</a></td>
         <td><a th:href="@{/products/view/{id}(id=${product.id})}">View</a></td>
     </tr>
     </tbody>
 </table>
+<hr>
+<div th:if="${not #lists.isEmpty(productSearch)}">
+    <h1>List of products to search for</h1>
+    <table class="table table-striped table-dark">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Price</th>
+            <th scope="col">Description</th>
+            <th scope="col">Brand</th>
+            <th scope="col">Image</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item1:${productSearch}">
+            <th scope="row" th:text="${item1.id}"></th>
+            <td th:text="${item1.name}"></td>
+            <td th:text="${item1.price}"></td>
+            <td th:text="${item1.description}"></td>
+            <td th:text="${item1.brand}"></td>
+            <td class="a"><img th:src="@{'/static/image/' + ${item1.image}}" alt="" src=""></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 </body>
 </html>

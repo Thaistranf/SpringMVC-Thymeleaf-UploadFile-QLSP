@@ -1,10 +1,12 @@
 package com.example.springmvcthymeleafuploadfileqlsp.service;
 
 import com.example.springmvcthymeleafuploadfileqlsp.model.Product;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
+@Service
 public class ProductService implements IProductService{
     List<Product> products = new ArrayList<>();
 
@@ -34,5 +36,12 @@ public class ProductService implements IProductService{
     @Override
     public void remove(int id) {
         products.remove(findById(id));
+    }
+
+    @Override
+    public List<Product> search(String keyword) {
+        return products.stream()
+                .filter(product -> product.getName().toLowerCase().contains(keyword.toLowerCase()))
+                .collect(Collectors.toList());
     }
 }

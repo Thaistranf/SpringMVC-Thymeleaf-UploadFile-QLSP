@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        img {
+            max-width: 550px;  /* Ảnh không vượt quá chiều rộng của ô */
+            max-height: 550px; /* Ảnh không vượt quá chiều cao của ô */
+            width: auto;      /* Tự động điều chỉnh chiều rộng */
+            height: auto;     /* Tự động điều chỉnh chiều cao */
+            display: block;   /* Loại bỏ khoảng trắng dư thừa dưới ảnh */
+        }
+    </style>
+</head>
+<body>
+<a th:href="@{/products/home}">Back to home</a>
+<div>
+    <div>
+        <label>ID: </label>
+        <label th:text="${productView.id}"></label>
+    </div>
+    <div>
+        <label>Name: </label>
+        <label th:text="${productView.name}"></label>
+    </div>
+    <div>
+        <label>Price: </label>
+        <label th:text="${productView.price}"></label>
+    </div>
+    <div>
+        <label>Description: </label>
+        <label th:text="${productView.description}"></label>
+    </div>
+    <div>
+        <label>Brand: </label>
+        <label th:text="${productView.brand}"></label>
+    </div>
+    <div>
+        <label>Image: </label>
+        <label><img th:src="@{'/static/image/' + ${productView.image}}" alt="" src=""></label>
+    </div>
+</div>
+</body>
+</html>

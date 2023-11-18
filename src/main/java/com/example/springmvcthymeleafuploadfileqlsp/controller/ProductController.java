@@ -51,9 +51,9 @@ public class ProductController {
         return "redirect:/products/home";
     }
 
-    @GetMapping("/update/{id}")
-    public ModelAndView showEditForm(@PathVariable int id){
-        Product product = productService.findById(id);
+    @GetMapping("/update")
+    public ModelAndView showEditForm(@ModelAttribute ProductForm productForm){
+        Product product = productService.findById(productForm.getId());
         ModelAndView modelAndView = new ModelAndView("/update");
         modelAndView.addObject("productEdit", product);
         return modelAndView;
@@ -61,19 +61,43 @@ public class ProductController {
 
     @PostMapping("/update/{id}")
     public String edit(@PathVariable int id, @ModelAttribute ProductForm productForm){
-        Product product = productService.findById(id);
-        if (product != null){
-            MultipartFile multipartFile = productForm.getImage();
+        Product product = productService.findById(productForm.getId());
+        Product product1 = null;
+        MultipartFile multipartFile = productForm.getImage();
+
+        if (!multipartFile.isEmpty()){
             String fileName = multipartFile.getOriginalFilename();
             try {
                 FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + fileName));
             } catch (IOException ex) {
                 System.out.println(ex);
             }
-            product = new Product(productForm.getId(), productForm.getName(), productForm.getPrice(), productForm.getDescription(), productForm.getBrand(), fileName);
-            productService.update(id, product);
+            product1 = new Product(productForm.getId(), productForm.getName(), productForm.getPrice(), productForm.getDescription(), productForm.getBrand(), fileName);
+        } else {
+            product1 = new Product(productForm.getId(), productForm.getName(), productForm.getPrice(), productForm.getDescription(), productForm.getBrand(), product.getImage());
         }
 
+        productService.update(productForm.getId(), product1);
         return "redirect:/products/home";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable int id, @ModelAttribute ProductForm productForm){
+        productService.remove(productForm.getId());
+        return "redirect:/products/home";
+    }
+
+    @GetMapping("/view/{id}")
+    public String View(@PathVariable int id, Model model){
+        ProductForm productForm = new ProductForm();
+        model.addAttribute("productView", productService.findById(productForm.getId()));
+        return "/view";
+    }
+
+    @PostMapping("/search")
+    public String search(@RequestParam("keyword") String keyword, Model model){
+        List<Product> searchProduct = productService.search(keyword);
+        model.addAttribute("productSearch", searchProduct);
+        return "/home";
     }
 }
