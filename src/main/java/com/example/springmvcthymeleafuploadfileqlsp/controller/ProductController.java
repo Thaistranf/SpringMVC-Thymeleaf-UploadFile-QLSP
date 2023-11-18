@@ -60,7 +60,20 @@ public class ProductController {
     }
 
     @PostMapping("/update/{id}")
-    public String edit(@PathVariable int id){
+    public String edit(@PathVariable int id, @ModelAttribute ProductForm productForm){
+        Product product = productService.findById(id);
+        if (product != null){
+            MultipartFile multipartFile = productForm.getImage();
+            String fileName = multipartFile.getOriginalFilename();
+            try {
+                FileCopyUtils.copy(multipartFile.getBytes(), new File(fileUpload + fileName));
+            } catch (IOException ex) {
+                System.out.println(ex);
+            }
+            product = new Product(productForm.getId(), productForm.getName(), productForm.getPrice(), productForm.getDescription(), productForm.getBrand(), fileName);
+            productService.update(id, product);
+        }
+
         return "redirect:/products/home";
     }
 }

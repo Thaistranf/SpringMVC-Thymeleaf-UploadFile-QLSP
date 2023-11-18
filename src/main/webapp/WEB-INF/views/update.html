@@ -1,10 +1,51 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{/static/css/style.css}">
 </head>
 <body>
+<h1>Edit product</h1>
 
+<a th:href="@{/products/home}">
+    Back to home
+</a>
+
+<form th:action="@{/products/update/{id}(id=${productEdit.getId()})}" th:object="${productEdit}"
+      method="POST" novalidate="novalidate" enctype="multipart/form-data">
+<!--        <input type="hidden" th:field="*{id}"/>-->
+    <table>
+        <tr>
+            <td><label for="id">Id</label></td>
+            <td><input type="text" id="id" th:field="*{id}" readonly/></td>
+        </tr>
+        <tr>
+            <td><label for="name">Name</label></td>
+            <td><input type="text" id="name" th:field="*{name}"/></td>
+        </tr>
+        <tr>
+            <td><label for="price">Price</label></td>
+            <td><input type="text" id="price" th:field="*{price}"/></td>
+        </tr>
+        <tr>
+            <td><label for="description">Description</label></td>
+            <td><input type="text" id="description" th:field="*{description}"/></td>
+        </tr>
+        <tr>
+            <td><label for="brand">Brand</label></td>
+            <td><input type="text" id="brand" th:field="*{brand}"/></td>
+        </tr>
+        <tr>
+            <td><label for="image">Image</label></td>
+            <td><input type="file" id="image" th:field="*{image}"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Save"/></td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>

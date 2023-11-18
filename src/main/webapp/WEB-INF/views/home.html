@@ -38,9 +38,9 @@
         <td th:text="${product.description}"></td>
         <td th:text="${product.brand}"></td>
         <td><img height="20%" width="20%" th:src="@{'/static/image/' + ${product.image}}" alt="" src=""></td>
-        <td><a th:href="@{products/update/{id}(id=${product.id})}">Edit</a></td>
-        <td><a th:href="@{products/delete/{id}(id=${product.id})}" onclick="return confirm('Xóa nhé???')">Delete</a></td>
-        <td><a th:href="@{products/view/{id}(id=${product.id})}">View</a></td>
+        <td><a th:href="@{/products/update/{id}(id=${product.id})}">Edit</a></td>
+        <td><a th:href="@{/products/delete/{id}(id=${product.id})}" onclick="return confirm('Xóa nhé???')">Delete</a></td>
+        <td><a th:href="@{/products/view/{id}(id=${product.id})}">View</a></td>
     </tr>
     </tbody>
 </table>
